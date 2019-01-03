@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:context=".SoundActivity">
+
+    <TextView
+        android:id="@+id/id_tv_state"
+        android:layout_width="200px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:text="当前状态"/>
+
+    <ImageView
+        android:id="@+id/id_iv_recode"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        tools:layout_editor_absoluteY="0dp"/>
+
+    <ImageView
+        android:id="@+id/iv_start_play"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@id/id_iv_recode"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/icon_start_3"
+        tools:ignore="VectorDrawableCompat"/>
+
+</LinearLayout>
