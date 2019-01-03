@@ -1,4 +1,4 @@
-package top.toly.sound.cmp;
+package top.toly.sound.pcm;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  * 邮箱：1981462002@qq.com
  * 说明：CMP播放(解码)
  */
-public class CMPAudioPlayer {
+public class PCMAudioPlayer {
     //默认配置AudioTrack-----此处是解码，要环和编码的配置对应
     private static final int DEFAULT_STREAM_TYPE = AudioManager.STREAM_MUSIC;//音乐
     private static final int DEFAULT_SAMPLE_RATE = 44100;//采样频率
@@ -29,10 +29,10 @@ public class CMPAudioPlayer {
     private AudioTrack audioTrack;//音轨
     private DataInputStream dis;//流
     private boolean isStart = false;
-    private static CMPAudioPlayer mInstance;//单例
+    private static PCMAudioPlayer mInstance;//单例
     private int mMinBufferSize;//最小缓存大小
 
-    public CMPAudioPlayer() {
+    public PCMAudioPlayer() {
         mMinBufferSize = AudioTrack.getMinBufferSize(
                 DEFAULT_SAMPLE_RATE, DEFAULT_CHANNEL_CONFIG, AudioFormat.ENCODING_PCM_16BIT);
         //实例化AudioTrack
@@ -47,11 +47,11 @@ public class CMPAudioPlayer {
      *
      * @return
      */
-    public static CMPAudioPlayer getInstance() {
+    public static PCMAudioPlayer getInstance() {
         if (mInstance == null) {
-            synchronized (CMPAudioPlayer.class) {
+            synchronized (PCMAudioPlayer.class) {
                 if (mInstance == null) {
-                    mInstance = new CMPAudioPlayer();
+                    mInstance = new PCMAudioPlayer();
                 }
             }
         }

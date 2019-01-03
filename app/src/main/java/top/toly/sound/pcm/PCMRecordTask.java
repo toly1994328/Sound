@@ -1,4 +1,4 @@
-package top.toly.sound.cmp;
+package top.toly.sound.pcm;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;

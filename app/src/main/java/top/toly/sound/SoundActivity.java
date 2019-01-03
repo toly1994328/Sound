@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.toly.app.permission.Permission;
 import top.toly.app.permission.PermissionActivity;
-import top.toly.sound.cmp.CMPSoundActivity;
+import top.toly.sound.pcm.PCMSoundActivity;
 
 public class SoundActivity extends PermissionActivity {
 
@@ -73,10 +73,10 @@ public class SoundActivity extends PermissionActivity {
             case R.id.id_btn_change:
                 break;
             case R.id.id_btn_bit:
-                startActivity(new Intent(this, CMPSoundActivity.class));
+                startActivity(new Intent(this, PCMSoundActivity.class));
                 break;
             case R.id.id_btn_see_sound:
-                startActivity(new Intent(this, CMPSoundActivity.class));
+                startActivity(new Intent(this, PCMSoundActivity.class));
                 break;
         }
     }

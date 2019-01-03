@@ -1,4 +1,4 @@
-package top.toly.sound.cmp;
+package top.toly.sound.pcm;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -18,9 +18,10 @@ import top.toly.app.StrUtil;
 import top.toly.app.io.FileHelper;
 import top.toly.app.permission.Permission;
 import top.toly.app.permission.PermissionActivity;
+import top.toly.app.visibale.PcmFileWaveView;
 import top.toly.sound.R;
 
-public class CMPSoundActivity extends PermissionActivity  {
+public class PCMSoundActivity extends PermissionActivity {
 
     @BindView(R.id.id_iv_recode)
     ImageView mIdIvRecode;
@@ -28,6 +29,8 @@ public class CMPSoundActivity extends PermissionActivity  {
     TextView mIdTvState;
     @BindView(R.id.iv_start_play)
     ImageView mIvStartPlay;
+    @BindView(R.id.id_pcm)
+    PcmFileWaveView mIdPcm;
     private AnimationDrawable animation;
 
     private boolean isOpen = false;
@@ -47,7 +50,8 @@ public class CMPSoundActivity extends PermissionActivity  {
 
         mPcmRecordTask = new PCMRecordTask();
 
-
+        mIdPcm.showPcmFileWave(new File("/sdcard/pcm录音/keke.pcm"));
+        mIdPcm.setProgress(0.5f);
         mPcmRecordTask.setOnRecording(new OnRecording() {
 
             @Override
@@ -97,7 +101,7 @@ public class CMPSoundActivity extends PermissionActivity  {
                 btnStop();
             }
             isOpen = !isOpen;
-            CMPAudioPlayer.getInstance().startPlay("/sdcard/pcm录音/20190103140621.toly");
+            PCMAudioPlayer.getInstance().startPlay("/sdcard/pcm录音/keke.pcm");
 
         });
     }
