@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--一个自定义控件-->
+    <declare-styleable name="ProgressView">
+        <!--自定义属性名 和 类型-->
+        <attr name="z_bar_color" format="color"/>
+    </declare-styleable>
+</resources>

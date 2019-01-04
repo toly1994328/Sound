@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <top.toly.sound.widget.ProgressView
+        android:id="@+id/id_pv_pre"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#D6D6D6"
+        app:layout_constraintBottom_toTopOf="@id/in_main_list_bottom_bar"
+        app:z_bar_color="#FF7F47"/>
+
+    <include
+        android:id="@+id/in_main_list_bottom_bar"
+        layout="@layout/in_main_list_bottom_bar"/>
+
+</android.support.constraint.ConstraintLayout>
