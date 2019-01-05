@@ -2,11 +2,9 @@ package top.toly.sound.mplayer;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,34 +17,25 @@ import top.toly.app.test.L;
  * 说明：
  */
 public class MusicPlayer {
-    private Timer mTimer;
     private MediaPlayer mPlayer;
     private Context mContext;
 
-    private boolean isInitialized = false;//是否已初始化
     private Thread initThread;
+    private Timer mTimer;
     private final Handler mHandler;
     //    private final SeekThread mSeekThread;
+    private String filePath;
 
-
-    public MusicPlayer(Context context) {
-        mContext = context;
-
-        initThread = new Thread(this::init);
-//        mSeekThread = new SeekThread();
+    public MusicPlayer() {
 
         mTimer = new Timer();//创建Timer
         mHandler = new Handler();//创建Handler
-
-        initThread.start();
+        init();
     }
 
     private void init() {
-//        Uri uri = Uri.parse("http://www.toly1994.com:8089/file/洛天依.mp3");
+        mPlayer = new MediaPlayer();//1.无业游民
 
-        Uri uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().getPath(), "toly/勇气-梁静茹-1772728608-1.mp3"));
-        mPlayer = MediaPlayer.create(mContext, uri);
-        isInitialized = true;
 
         mPlayer.setOnErrorListener((mp, what, extra) -> {
             //处理错误
@@ -62,7 +51,7 @@ public class MusicPlayer {
         //播放完成监听
         mPlayer.setOnCompletionListener(mp -> {
             L.d("CompletionListene"+L.l());
-            start();
+            start(filePath);
         });
 
         //seekTo方法完成回调
@@ -85,10 +74,20 @@ public class MusicPlayer {
     /**
      * 播放
      */
-    public void start() {
+    public void start(String path) {
         //未初始化和正在播放时return
-        if (!isInitialized && mPlayer.isPlaying()) {
+        if (mPlayer!=null && mPlayer.isPlaying()) {
             return;
+        }
+        try {
+            if (path != null) {
+                filePath = path;
+                mPlayer.reset();
+                mPlayer.setDataSource(filePath);
+                mPlayer.prepare();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         mPlayer.start();
         mTimer.schedule(new TimerTask() {
@@ -116,7 +115,7 @@ public class MusicPlayer {
 
     public boolean isPlaying() {
         //未初始化和正在播放时return
-        if (!isInitialized) {
+        if (mPlayer == null) {
             return false;
         }
         return mPlayer.isPlaying();
@@ -131,8 +130,6 @@ public class MusicPlayer {
             mPlayer.release();//释放资源
             mPlayer = null;
         }
-        isInitialized = false;
-
         mTimer.cancel();
         mTimer = null;
     }
@@ -167,7 +164,7 @@ public class MusicPlayer {
     public void seekTo(int pre_100) {
         pause();
         mPlayer.seekTo((int) (pre_100/100.f*mPlayer.getDuration()));
-        start();
+        start(filePath);
     }
 
     //------------设置进度监听-----------

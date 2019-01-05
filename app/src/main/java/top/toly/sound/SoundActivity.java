@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.toly.app.permission.Permission;
 import top.toly.app.permission.PermissionActivity;
+import top.toly.sound.aac.MediaRecorderActivity;
 import top.toly.sound.pcm.PCMSoundActivity;
 
 public class SoundActivity extends PermissionActivity {
@@ -68,7 +69,7 @@ public class SoundActivity extends PermissionActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.id_btn_file:
-                startActivity(new Intent(this, FileActivity.class));
+                startActivity(new Intent(this, MediaRecorderActivity.class));
                 break;
             case R.id.id_btn_change:
                 break;

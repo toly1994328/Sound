@@ -18,12 +18,13 @@
         <activity android:name=".SoundActivity">
 
         </activity>
-        <activity android:name=".FileActivity">
-        </activity>
         <activity android:name=".pcm.PCMSoundActivity">
 
         </activity>
         <activity android:name=".mplayer.MediaPlayerActivity">
+
+        </activity>
+        <activity android:name=".aac.MediaRecorderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

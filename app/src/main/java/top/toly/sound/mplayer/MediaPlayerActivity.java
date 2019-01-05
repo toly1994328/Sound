@@ -22,6 +22,7 @@ public class MediaPlayerActivity extends PermissionActivity {
     AlphaImageView mIdIvNext;
     @BindView(R.id.id_iv_pre_list)
     AlphaImageView mIdIvPreList;
+    private NetMusicPlayer mMusicPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,28 +31,29 @@ public class MediaPlayerActivity extends PermissionActivity {
         ButterKnife.bind(this);
         applyPermissions(Permission._RECORD_AUDIO, Permission._CAMERA, Permission._WRITE_EXTERNAL_STORAGE);
 
-        NetMusicPlayer musicPlayer = new NetMusicPlayer(this);//实例化
+        //实例化
+        mMusicPlayer = new NetMusicPlayer(this);
 
-        musicPlayer.setOnSeekListener(per_100 -> {
+        mMusicPlayer.setOnSeekListener(per_100 -> {
             mIdPvPre.setProgress(per_100);
 
         });
 
-        musicPlayer.setOnBufferListener(per_100 -> {
+        mMusicPlayer.setOnBufferListener(per_100 -> {
             mIdPvPre.setProgress2(per_100);
 
         });
 
         mIdPvPre.setOnDragListener(pre_100 -> {
-            musicPlayer.seekTo(pre_100);
+            mMusicPlayer.seekTo(pre_100);
         });
 
         mIdIvCtrl.setOnClickListener(v -> {
-            if (musicPlayer.isPlaying()) {
-                musicPlayer.pause();
+            if (mMusicPlayer.isPlaying()) {
+                mMusicPlayer.pause();
                 mIdIvCtrl.setImageResource(R.drawable.icon_stop_2);//设置图标暂停
             } else {
-                musicPlayer.start();
+                mMusicPlayer.start();
                 mIdIvCtrl.setImageResource(R.drawable.icon_start_2);//设置图标播放
             }
         });
@@ -65,5 +67,9 @@ public class MediaPlayerActivity extends PermissionActivity {
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        mMusicPlayer.onDestroyed();
+    }
 }
