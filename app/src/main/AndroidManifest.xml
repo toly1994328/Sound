@@ -18,13 +18,19 @@
         <activity android:name=".SoundActivity">
 
         </activity>
-        <activity android:name=".pcm.PCMSoundActivity">
+        <activity android:name=".audio.PCMSoundActivity">
 
         </activity>
-        <activity android:name=".mplayer.MediaPlayerActivity">
+        <activity android:name=".media.MediaPlayerActivity">
 
         </activity>
-        <activity android:name=".aac.MediaRecorderActivity">
+        <activity android:name=".media.MediaRecorderActivity">
+
+        </activity>
+        <activity android:name=".soundpool.EffectSoundActivity">
+
+        </activity>
+        <activity android:name=".audio.effect.EffectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

@@ -1,4 +1,4 @@
-package top.toly.sound.pcm;
+package top.toly.sound.audio;
 
 /**
  * 作者：张风捷特烈<br/>

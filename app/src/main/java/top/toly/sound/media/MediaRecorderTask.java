@@ -1,4 +1,4 @@
-package top.toly.sound.aac;
+package top.toly.sound.media;
 
 import android.media.MediaRecorder;
 import android.os.Handler;
@@ -34,6 +34,11 @@ public class MediaRecorderTask {
      * 开始录音
      */
     public void start(File file) {
+
+        doRecorder(file);
+    }
+
+    private void doRecorder(File file) {
         mAllTime = 0;
         mFile = file;
         if (mRecorder == null) {
@@ -62,7 +67,6 @@ public class MediaRecorderTask {
         if (mRecorder != null) {
             mRecorder.start();
             isRecording = true;
-
             cbkVolume();
         }
     }

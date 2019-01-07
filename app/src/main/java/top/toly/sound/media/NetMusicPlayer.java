@@ -1,7 +1,8 @@
-package top.toly.sound.mplayer;
+package top.toly.sound.media;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 
 import java.io.IOException;
@@ -14,20 +15,18 @@ import top.toly.app.test.L;
  * 作者：张风捷特烈<br/>
  * 时间：2019/1/4 0004:10:12<br/>
  * 邮箱：1981462002@qq.com<br/>
- * 说明：
+ * 说明：网络音乐播放测试
  */
-public class MusicPlayer {
+public class NetMusicPlayer {
+    private Timer mTimer;
     private MediaPlayer mPlayer;
     private Context mContext;
 
-    private Thread initThread;
-    private Timer mTimer;
+    private boolean isInitialized = false;//是否已初始化
     private final Handler mHandler;
-    //    private final SeekThread mSeekThread;
-    private String filePath;
 
-    public MusicPlayer() {
-
+    public NetMusicPlayer(Context context) {
+        mContext = context;
         mTimer = new Timer();//创建Timer
         mHandler = new Handler();//创建Handler
         init();
@@ -35,6 +34,13 @@ public class MusicPlayer {
 
     private void init() {
         mPlayer = new MediaPlayer();//1.无业游民
+        Uri uri = Uri.parse("http://www.toly1994.com:8089/file/洛天依.mp3");
+        try {
+            mPlayer.setDataSource(mContext, uri);//2.找到工作
+            mPlayer.prepareAsync();//3.异步准备明天的工作
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         mPlayer.setOnErrorListener((mp, what, extra) -> {
@@ -43,30 +49,29 @@ public class MusicPlayer {
         });
 
         //当装载流媒体完毕的时候回调
-        mPlayer.setOnPreparedListener(mp->{
-            L.d("OnPreparedListener"+L.l());
-
+        mPlayer.setOnPreparedListener(mp -> {//4.准备OK
+            L.d("OnPreparedListener" + L.l());
+            isInitialized = true;
         });
 
         //播放完成监听
         mPlayer.setOnCompletionListener(mp -> {
-            L.d("CompletionListene"+L.l());
-            start(filePath);
+            L.d("CompletionListene" + L.l());
+            start();
         });
 
         //seekTo方法完成回调
         mPlayer.setOnSeekCompleteListener(mp -> {
-            L.d("SeekCompleteListener"+L.l());
+            L.d("SeekCompleteListener" + L.l());
         });
-
 
 
         //网络流媒体的缓冲变化时回调
         mPlayer.setOnBufferingUpdateListener((mp, percent) -> {
             if (mOnBufferListener != null) {
-                mOnBufferListener.OnSeek(percent * 100);
+                mOnBufferListener.OnSeek(percent);
             }
-            L.d("BufferingUpdateListener"+L.l());
+            L.d("BufferingUpdateListener"+percent+L.l());
         });
 
     }
@@ -74,20 +79,10 @@ public class MusicPlayer {
     /**
      * 播放
      */
-    public void start(String path) {
+    public void start() {
         //未初始化和正在播放时return
-        if (mPlayer!=null && mPlayer.isPlaying()) {
+        if (!isInitialized && mPlayer.isPlaying()) {
             return;
-        }
-        try {
-            if (path != null) {
-                filePath = path;
-                mPlayer.reset();
-                mPlayer.setDataSource(filePath);
-                mPlayer.prepare();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         mPlayer.start();
         mTimer.schedule(new TimerTask() {
@@ -115,7 +110,7 @@ public class MusicPlayer {
 
     public boolean isPlaying() {
         //未初始化和正在播放时return
-        if (mPlayer == null) {
+        if (!isInitialized) {
             return false;
         }
         return mPlayer.isPlaying();
@@ -130,6 +125,8 @@ public class MusicPlayer {
             mPlayer.release();//释放资源
             mPlayer = null;
         }
+        isInitialized = false;
+
         mTimer.cancel();
         mTimer = null;
     }
@@ -159,12 +156,13 @@ public class MusicPlayer {
 
     /**
      * 跳转到
+     *
      * @param pre_100
      */
     public void seekTo(int pre_100) {
         pause();
-        mPlayer.seekTo((int) (pre_100/100.f*mPlayer.getDuration()));
-        start(filePath);
+        mPlayer.seekTo((int) (pre_100 / 100.f * mPlayer.getDuration()));
+        start();
     }
 
     //------------设置进度监听-----------
@@ -178,14 +176,15 @@ public class MusicPlayer {
         mOnSeekListener = onSeekListener;
     }
 
-    //------------设置进度监听-----------
+
+    //------------设置缓存进度监听-----------
     public interface OnBufferListener {
         void OnSeek(int per_100);
     }
 
-    private OnBufferListener mOnBufferListener;
+    private MusicPlayer.OnBufferListener mOnBufferListener;
 
-    public void setOnBufferListener(OnBufferListener onBufferListener) {
+    public void setOnBufferListener(MusicPlayer.OnBufferListener onBufferListener) {
         mOnBufferListener = onBufferListener;
     }
 }

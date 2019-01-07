@@ -1,4 +1,4 @@
-package top.toly.sound.pcm;
+package top.toly.sound.audio;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -8,7 +8,7 @@ import android.media.MediaRecorder;
  * 作者：张风捷特烈<br/>
  * 时间：2019/1/3 0003:10:58<br/>
  * 邮箱：1981462002@qq.com<br/>
- * 说明：PCM编码音频录制辅助
+ * 说明：PCM编码-音频录制辅助
  */
 public class PCMRecordTask {
     //默认配置AudioRecord
@@ -58,6 +58,8 @@ public class PCMRecordTask {
         }
         mMinBufferSize = AudioRecord.getMinBufferSize(sampleRate, channel, format);
         mAudioRecord = new AudioRecord(source, sampleRate, channel, format, mMinBufferSize);
+
+
         mAudioRecord.startRecording();
 
         mIsRecording = true;//正在录制

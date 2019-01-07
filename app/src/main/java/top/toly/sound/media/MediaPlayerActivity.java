@@ -1,4 +1,4 @@
-package top.toly.sound.mplayer;
+package top.toly.sound.media;
 
 import android.os.Bundle;
 import android.widget.ImageView;

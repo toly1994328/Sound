@@ -13,8 +13,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.toly.app.permission.Permission;
 import top.toly.app.permission.PermissionActivity;
-import top.toly.sound.aac.MediaRecorderActivity;
-import top.toly.sound.pcm.PCMSoundActivity;
+import top.toly.sound.media.MediaRecorderActivity;
+import top.toly.sound.audio.PCMSoundActivity;
 
 public class SoundActivity extends PermissionActivity {
 
